@@ -1,14 +1,18 @@
 const axios = require('axios');
+const https = require('https');
 
 class CarRepository {
-  findCar(carId) {
-    axios.get(`http://localhost:5555/cars/${carId}`)
-      .then(response => {
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+  async findCar(carId) {
+    const agent = new https.Agent({
+      rejectUnauthorized: false
+    });
+    const response = await axios.get(`https://localhost:5555/cars/${carId}`, {
+      headers: {
+        'Accept': 'application/json'
+      },
+      httpsAgent: agent,
+    });
+    return response.data; 
   }
 }
 

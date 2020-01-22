@@ -2,4 +2,9 @@ const CarRepository = require('./car-repository');
 
 const carRepository = new CarRepository();
 
-carRepository.findCar(1);
+const command = async () => {
+  const car = await carRepository.findCar(1);
+  console.log(car);
+}
+
+command();

@@ -1,4 +1,6 @@
 var express = require('express');
+var http2 = require('http2');
+var fs = require('fs');
 var app = express();
 
 var carDB = [{
@@ -24,6 +26,9 @@ app.get('/cars/:id', function (req, res) {
 });
 
 var port = 5555;
-app.listen(port, function () {
+http2.createServer({
+  key: fs.readFileSync('./cert/localhost.key'),
+  cert: fs.readFileSync('./cert/localhost.cert')
+}, app).listen(port, function () {
   console.log(`Example app listening on port ${port}!`);
 });
